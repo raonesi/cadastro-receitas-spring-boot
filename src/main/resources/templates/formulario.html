@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${receita.id == null ? 'Nova receita' : 'Editar receita'}">Receita</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container formulario-container">
+    <a class="voltar" th:href="@{/receitas}">&larr; Voltar para receitas</a>
+    <header class="titulo-formulario">
+        <p class="sobretitulo">Cadastro de receitas</p>
+        <h1 th:text="${receita.id == null ? 'Nova receita' : 'Editar receita'}">Nova receita</h1>
+        <p>Preencha os campos abaixo para salvar as informacoes da receita.</p>
+    </header>
+
+    <form class="formulario" th:action="@{/receitas/salvar}" th:object="${receita}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="grade-formulario">
+            <div class="campo campo-largo">
+                <label for="nome">Nome da receita</label>
+                <input id="nome" type="text" th:field="*{nome}" placeholder="Ex.: Lasanha de frango">
+                <small class="erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></small>
+            </div>
+            <div class="campo">
+                <label for="categoria">Categoria</label>
+                <input id="categoria" type="text" th:field="*{categoria}" placeholder="Ex.: Massa">
+                <small class="erro" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
+            </div>
+            <div class="campo">
+                <label for="dificuldade">Dificuldade</label>
+                <select id="dificuldade" th:field="*{dificuldade}">
+                    <option value="">Selecione</option>
+                    <option value="Facil">Facil</option>
+                    <option value="Media">Media</option>
+                    <option value="Dificil">Dificil</option>
+                </select>
+                <small class="erro" th:if="${#fields.hasErrors('dificuldade')}" th:errors="*{dificuldade}"></small>
+            </div>
+            <div class="campo">
+                <label for="tempoPreparo">Tempo de preparo em minutos</label>
+                <input id="tempoPreparo" type="number" min="1" th:field="*{tempoPreparo}" placeholder="Ex.: 45">
+                <small class="erro" th:if="${#fields.hasErrors('tempoPreparo')}" th:errors="*{tempoPreparo}"></small>
+            </div>
+            <div class="campo">
+                <label for="rendimento">Rendimento em porcoes</label>
+                <input id="rendimento" type="number" min="1" th:field="*{rendimento}" placeholder="Ex.: 6">
+                <small class="erro" th:if="${#fields.hasErrors('rendimento')}" th:errors="*{rendimento}"></small>
+            </div>
+            <div class="campo campo-largo">
+                <label for="ingredientes">Ingredientes</label>
+                <textarea id="ingredientes" th:field="*{ingredientes}" rows="5" placeholder="Liste os ingredientes e suas quantidades."></textarea>
+                <small class="erro" th:if="${#fields.hasErrors('ingredientes')}" th:errors="*{ingredientes}"></small>
+            </div>
+            <div class="campo campo-largo">
+                <label for="modoPreparo">Modo de preparo</label>
+                <textarea id="modoPreparo" th:field="*{modoPreparo}" rows="6" placeholder="Descreva o passo a passo do preparo."></textarea>
+                <small class="erro" th:if="${#fields.hasErrors('modoPreparo')}" th:errors="*{modoPreparo}"></small>
+            </div>
+        </div>
+        <div class="rodape-formulario">
+            <a class="botao botao-secundario" th:href="@{/receitas}">Cancelar</a>
+            <button class="botao botao-principal" type="submit">Salvar receita</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

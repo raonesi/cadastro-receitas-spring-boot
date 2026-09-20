@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas cadastradas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="cabecalho">
+        <div>
+            <p class="sobretitulo">Sistema de cadastro</p>
+            <h1>Receitas</h1>
+            <p>Organize suas receitas favoritas em um so lugar.</p>
+        </div>
+        <a class="botao botao-principal" th:href="@{/receitas/nova}">+ Nova receita</a>
+    </header>
+
+    <p class="mensagem sucesso" th:if="${sucesso}" th:text="${sucesso}"></p>
+
+    <section class="estado-vazio" th:if="${#lists.isEmpty(receitas)}">
+        <h2>Nenhuma receita cadastrada</h2>
+        <p>Comece adicionando sua primeira receita.</p>
+        <a class="botao botao-principal" th:href="@{/receitas/nova}">Cadastrar receita</a>
+    </section>
+
+    <section class="tabela-cartao" th:unless="${#lists.isEmpty(receitas)}">
+        <table>
+            <thead>
+            <tr>
+                <th>Receita</th>
+                <th>Categoria</th>
+                <th>Tempo</th>
+                <th>Rendimento</th>
+                <th>Dificuldade</th>
+                <th>Acoes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="receita : ${receitas}">
+                <td><strong th:text="${receita.nome}">Bolo de chocolate</strong></td>
+                <td th:text="${receita.categoria}">Sobremesa</td>
+                <td th:text="|${receita.tempoPreparo} min|">30 min</td>
+                <td th:text="|${receita.rendimento} porcoes|">8 porcoes</td>
+                <td><span class="etiqueta" th:text="${receita.dificuldade}">Facil</span></td>
+                <td class="acoes">
+                    <a class="link-editar" th:href="@{/receitas/editar/{id}(id=${receita.id})}">Editar</a>
+                    <a class="link-excluir" th:href="@{/receitas/excluir/{id}(id=${receita.id})}">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
